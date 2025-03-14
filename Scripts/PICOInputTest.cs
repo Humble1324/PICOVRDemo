@@ -25,7 +25,6 @@ public class PICOInputTest : MonoBehaviour
     public InputActionProperty XButtonAction;
     public InputActionProperty YButtonAction;
     [Header("物体控制")]
-    public GameObject targetObject; // 新增需要控制的物体
     [SerializeField ]private bool isObjectVisible = false; // 物体显示状态标记
     void Start()
     {
@@ -73,41 +72,38 @@ public class PICOInputTest : MonoBehaviour
     private void Update()
     {
         ReadInput();
-        isObjectVisible=targetObject.activeSelf;
     }
     private void ReadButton(InputActionProperty actionProperty, string buttonName)
     {
         var action = actionProperty.action;
         if (action == null) return;
-
+    
         var value = action.ReadValue<float>();
         if (value > 0)
         {
             var device = action.activeControl?.device;
             Debug.Log($"[{buttonName}键] 设备: {device?.name} 值: {value}");
-
-            // 新增物体控制逻辑
+    
+            // 通过UIManager管理UI
             switch(buttonName)
             {
                 case "X":
-                    if(!isObjectVisible)
-                    {
-                        targetObject.SetActive(true);
-                        Debug.Log("物体已显示");
-                    }
+                    UIManager.Instance.ShowUI("UI/SettingPanel"); // 替换为实际的预制体路径
+                    Debug.Log("显示UI面板");
                     break;
-            
+        
                 case "B":
-                    if(isObjectVisible)
-                    {
-                        targetObject.SetActive(false);
-                        Debug.Log("物体已隐藏");
-                    }
+                    UIManager.Instance.HideUI("UI/SettingPanel"); // 如果需隐藏可添加HideUI方法
+                    Debug.Log("隐藏UI面板");
                     break;
             }
         }
     }
 
+    public void DebugButton()
+    {
+        UIManager.Instance.ShowUI("UI/SettingPanel"); // 替换为实际的预制体路径
+    }
     void DebugInput(InputAction.CallbackContext context, string actionName)
     {
        // var device = context.control.device;
