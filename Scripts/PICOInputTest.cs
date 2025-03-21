@@ -28,8 +28,8 @@ public class PICOInputTest : MonoBehaviour
     [SerializeField ]private bool isObjectVisible = false; // 物体显示状态标记
     void Start()
     {
-        SubscribeControllerEvents(leftController);
-        SubscribeControllerEvents(rightController);
+        //SubscribeControllerEvents(leftController);
+        //SubscribeControllerEvents(rightController);
     }
 
 
@@ -82,19 +82,24 @@ public class PICOInputTest : MonoBehaviour
         if (value > 0)
         {
             var device = action.activeControl?.device;
-            Debug.Log($"[{buttonName}键] 设备: {device?.name} 值: {value}");
+            //Debug.Log($"[{buttonName}键] 设备: {device?.name} 值: {value}");
     
             // 通过UIManager管理UI
             switch(buttonName)
             {
                 case "X":
                     UIManager.Instance.ShowUI("UI/SettingPanel"); // 替换为实际的预制体路径
-                    Debug.Log("显示UI面板");
+                    //Debug.Log("显示UI面板");
                     break;
         
                 case "B":
                     UIManager.Instance.HideUI("UI/SettingPanel"); // 如果需隐藏可添加HideUI方法
-                    Debug.Log("隐藏UI面板");
+                    //Debug.Log("隐藏UI面板");
+                    break;
+                case "A":
+                    //触发删除Cube逻辑
+                    print("触发删除Cube逻辑");
+                    CubeManager.Instance.TryRemoveCube();
                     break;
             }
         }

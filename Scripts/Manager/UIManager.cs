@@ -34,7 +34,8 @@ public class UIManager : MonoBehaviour
                 parent = transform;
             }
             GameObject newUIObj = Instantiate(prefab, parent);
-            
+            newUIObj.transform.localScale = Vector3.one;
+            print(newUIObj.transform.localScale);
             newUIObj.SetActive(true);
 
             uiInstances.Add(uiPrefabPath, newUIObj);
